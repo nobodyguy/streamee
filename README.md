@@ -1,2 +1,2 @@
-# streamee
-Just watch Streamee and chill
+# Streamee
+Just watch Streamee and chill.
