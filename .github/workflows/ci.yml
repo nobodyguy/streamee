@@ -1,0 +1,50 @@
+#  Name of workflow
+name: CI/CD workflow
+
+# When workflow is triggered
+on: [push]
+
+# Jobs to carry out
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        # Steps in job
+        steps:
+            # Get code from repo
+            - name: Checkout code
+              uses: actions/checkout@v3
+            # Install NodeJS
+            - name: Use Node.js 16.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+            # Run npm install and build on our code
+            - run: npm install
+            - run: npm run build --if-present
+            - run: npm run test
+    deploy:
+        needs: test
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        runs-on: ubuntu-latest
+        # Steps in job
+        steps:
+            # Get code from repo
+            - name: Checkout code
+              uses: actions/checkout@v3
+            # Install NodeJS
+            - name: Use Node.js 16.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+            # Run npm install and build on our code
+            - run: npm install
+            - run: npm run build --if-present
+            # Deploy to Netlify using our production secrets
+            - name: Deploy to netlify
+              uses: netlify/actions/cli@master
+              env:
+                  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+              with:
+                  args: deploy --dir=build --prod
+                  secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
