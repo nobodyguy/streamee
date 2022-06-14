@@ -1,9 +1,9 @@
 {
-  "name": "streamee",
-  "integrations": {
-    "capacitor": {
-      "enabled": false
-    }
-  },
-  "type": "react"
+    "name": "streamee",
+    "integrations": {
+        "capacitor": {
+            "enabled": false
+        }
+    },
+    "type": "react"
 }

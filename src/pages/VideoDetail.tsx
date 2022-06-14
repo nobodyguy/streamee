@@ -20,14 +20,13 @@ function VideoDetail() {
         const vid = getVideo(params.name);
         setVideo(vid);
     });
-    console.log("");
 
     return (
-        <IonPage id='view-message-page'>
+        <IonPage id="view-message-page">
             <IonHeader translucent>
                 <IonToolbar>
-                    <IonButtons slot='start'>
-                        <IonBackButton text='Videos' defaultHref='/videos'></IonBackButton>
+                    <IonButtons slot="start">
+                        <IonBackButton text="Videos" defaultHref="/videos"></IonBackButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

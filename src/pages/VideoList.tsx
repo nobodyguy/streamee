@@ -31,26 +31,26 @@ const VideoList: React.FC = () => {
     };
 
     return (
-        <IonPage id='videos-page'>
+        <IonPage id="videos-page">
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Videos</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonRefresher slot='fixed' onIonRefresh={refresh}>
+                <IonRefresher slot="fixed" onIonRefresh={refresh}>
                     <IonRefresherContent></IonRefresherContent>
                 </IonRefresher>
 
-                <IonHeader collapse='condense'>
+                <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size='large'>Videos</IonTitle>
+                        <IonTitle size="large">Videos</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid>
                     <IonRow>
                         {videos.map((v) => (
-                            <IonCol size='12' size-sm='6' size-md='4' size-xl='3'>
+                            <IonCol size="12" size-sm="6" size-md="4" size-xl="3">
                                 <VideoListItem key={v.name} video={v} />
                             </IonCol>
                         ))}

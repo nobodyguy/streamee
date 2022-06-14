@@ -8,5 +8,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "ignorePatterns": ["dist/", "node_modules/"],
-    "rules": {}
+    "rules": {
+        "no-console": 2
+    }
 }

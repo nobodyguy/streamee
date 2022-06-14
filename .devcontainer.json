@@ -2,11 +2,7 @@
     "image": "node:16-bullseye-slim",
     "forwardPorts": [3000],
     "containerUser": "node",
-    "extensions": [
-        "esbenp.prettier-vscode",
-        "mutantdino.resourcemonitor",
-        "nick-rudenko.back-n-forth"
-    ],
+    "extensions": ["esbenp.prettier-vscode", "mutantdino.resourcemonitor", "nick-rudenko.back-n-forth"],
     "workspaceMount": "",
     "workspaceFolder": "/workspaces/streamee",
     "runArgs": ["--volume=${localWorkspaceFolder}:/workspaces/streamee:Z", "--userns=keep-id"]
