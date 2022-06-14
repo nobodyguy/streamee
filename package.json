@@ -41,8 +41,11 @@
         "build": "react-scripts build",
         "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
         "test:noWatch": "npm run test -- --watchAll=false",
+        "typecheck": "tsc --noemit",
+        "typecheck:all": "npm run typecheck -- -p tsconfig.json",
         "lint": "eslint --cache --fix",
-        "format": "prettier --write"
+        "format": "prettier --write",
+        "format:check": "prettier --list-different src/"
     },
     "eslintConfig": {
         "extends": [
