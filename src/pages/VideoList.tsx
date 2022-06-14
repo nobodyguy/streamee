@@ -1,60 +1,64 @@
-import MessageListItem from '../components/VideoListItem';
-import { useState } from 'react';
-import { Message, getMessages } from '../data/messages';
+import VideoListItem from "../components/VideoListItem";
+import { useState } from "react";
+import { Video, getVideos } from "../data/videos";
 import {
-  IonContent,
-  IonHeader,
-  IonList,
-  IonPage,
-  IonRefresher,
-  IonRefresherContent,
-  IonTitle,
-  IonToolbar,
-  useIonViewWillEnter
-} from '@ionic/react';
-import './VideoList.css';
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonRefresher,
+    IonRefresherContent,
+    IonTitle,
+    IonToolbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    useIonViewWillEnter,
+} from "@ionic/react";
+import "./VideoList.css";
 
 const VideoList: React.FC = () => {
+    const [videos, setVideos] = useState<Video[]>([]);
 
-  const [messages, setMessages] = useState<Message[]>([]);
+    useIonViewWillEnter(() => {
+        const vids = getVideos();
+        setVideos(vids);
+    });
 
-  useIonViewWillEnter(() => {
-    const msgs = getMessages();
-    setMessages(msgs);
-  });
+    const refresh = (e: CustomEvent) => {
+        setTimeout(() => {
+            e.detail.complete();
+        }, 3000);
+    };
 
-  const refresh = (e: CustomEvent) => {
-    setTimeout(() => {
-      e.detail.complete();
-    }, 3000);
-  };
+    return (
+        <IonPage id='videos-page'>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Videos</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
+                <IonRefresher slot='fixed' onIonRefresh={refresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
 
-  return (
-    <IonPage id="home-page">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Inbox</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">
-              Inbox
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonList>
-          {messages.map(m => <MessageListItem key={m.id} message={m} />)}
-        </IonList>
-      </IonContent>
-    </IonPage>
-  );
+                <IonHeader collapse='condense'>
+                    <IonToolbar>
+                        <IonTitle size='large'>Videos</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonGrid>
+                    <IonRow>
+                        {videos.map((v) => (
+                            <IonCol size='12' size-sm='6' size-md='4' size-xl='3'>
+                                <VideoListItem key={v.name} video={v} />
+                            </IonCol>
+                        ))}
+                    </IonRow>
+                </IonGrid>
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default VideoList;
