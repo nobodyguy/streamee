@@ -4,3 +4,7 @@
     width: 100%;
     flex: 1;
 }
+
+.video-detail-name {
+    margin-top: 1rem;
+}

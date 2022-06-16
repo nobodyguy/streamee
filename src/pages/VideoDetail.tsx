@@ -28,7 +28,7 @@ function VideoDetail() {
                 {video ? (
                     <>
                         <VideoPlayer video={video} />
-                        <div>{video.name}</div>
+                        <div className="video-detail-name">{video.name}</div>
                     </>
                 ) : (
                     <div>Video not found</div>
