@@ -49,7 +49,7 @@ const VideoList: React.FC = () => {
                 </IonHeader>
                 <IonGrid>
                     <IonRow>
-                        {videos.map((v) => (
+                        {videos.map((v: Video) => (
                             <IonCol size="12" size-sm="6" size-md="4" size-xl="3">
                                 <VideoListItem key={v.name} video={v} />
                             </IonCol>

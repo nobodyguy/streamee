@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { Video, getVideo } from "../data/videos";
-import {
-    IonBackButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonToolbar,
-    useIonViewWillEnter,
-} from "@ionic/react";
+import VideoPlayer from "../components/VideoPlayer";
+import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, useIonViewWillEnter } from "@ionic/react";
 import { useParams } from "react-router";
 import "./VideoDetail.css";
 
@@ -22,7 +15,7 @@ function VideoDetail() {
     });
 
     return (
-        <IonPage id="view-message-page">
+        <IonPage id="video-detail-page">
             <IonHeader translucent>
                 <IonToolbar>
                     <IonButtons slot="start">
@@ -31,7 +24,16 @@ function VideoDetail() {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>{video ? <>{video.name}</> : <div>Video not found</div>}</IonContent>
+            <div className="video-detail-content">
+                {video ? (
+                    <>
+                        <VideoPlayer video={video} />
+                        <div>{video.name}</div>
+                    </>
+                ) : (
+                    <div>Video not found</div>
+                )}
+            </div>
         </IonPage>
     );
 }
