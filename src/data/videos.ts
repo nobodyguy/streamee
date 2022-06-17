@@ -2,12 +2,20 @@ import { useQuery } from "react-query";
 import { useMemo } from "react";
 import slugify from "slugify";
 
+enum DRM {
+    DEMO_CLEAR = "DEMO_CLEAR",
+    DEMO_CLEAR_KEY = "DEMO_CLEAR_KEY",
+    DEMO_WIDEVINE = "DEMO_WIDEVINE",
+    DEMO_PLAYREADY = "DEMO_PLAYREADY",
+}
+
 export interface Video {
     name: string;
     slug: string;
     iconUri: string;
     manifestUri: string;
     isFeatured: boolean;
+    drm: DRM[];
     isDRMProtected: boolean;
 }
 
@@ -22,6 +30,7 @@ function fetchVideos(): Promise<Video[]> {
 function transformVideos(data: Video[]) {
     return data.map((video: Video) => {
         video.slug = slugify(video.name);
+        video.isDRMProtected = video.drm.includes(DRM.DEMO_CLEAR) === false;
         return video;
     });
 }
