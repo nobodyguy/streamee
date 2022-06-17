@@ -3,6 +3,7 @@
     max-width: 960px;
     width: 100%;
     flex: 1;
+    padding-top: 1rem;
 }
 
 .video-detail-name {

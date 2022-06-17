@@ -8,7 +8,7 @@ interface VideoListItemProps {
 
 const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
     return (
-        <IonCard href={`/video/${video.name}`} disabled={video.isDRMProtected}>
+        <IonCard href={`/video/${video.slug}`} disabled={video.isDRMProtected}>
             <div className="video-poster">
                 <img src={video.iconUri} alt={video.name}></img>
             </div>

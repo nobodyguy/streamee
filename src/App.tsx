@@ -1,6 +1,7 @@
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import { QueryClient, QueryClientProvider } from "react-query";
 import VideoList from "./pages/VideoList";
 import VideoDetail from "./pages/VideoDetail";
 
@@ -25,22 +26,26 @@ import "./theme/variables.css";
 
 setupIonicReact();
 
+const queryClient: QueryClient = new QueryClient();
+
 const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonRouterOutlet>
-                <Route path="/" exact={true}>
-                    <Redirect to="/videos" />
-                </Route>
-                <Route path="/videos" exact={true}>
-                    <VideoList />
-                </Route>
-                <Route path="/video/:id">
-                    <VideoDetail />
-                </Route>
-            </IonRouterOutlet>
-        </IonReactRouter>
-    </IonApp>
+    <QueryClientProvider client={queryClient}>
+        <IonApp>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Route path="/" exact={true}>
+                        <Redirect to="/videos" />
+                    </Route>
+                    <Route path="/videos" exact={true}>
+                        <VideoList />
+                    </Route>
+                    <Route path="/video/:slug">
+                        <VideoDetail />
+                    </Route>
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
+    </QueryClientProvider>
 );
 
 export default App;

@@ -1,6 +1,5 @@
 import VideoListItem from "../components/VideoListItem";
-import { useState } from "react";
-import { Video, getVideos } from "../data/videos";
+import { Video, useVideos } from "../data/videos";
 import {
     IonContent,
     IonHeader,
@@ -12,23 +11,19 @@ import {
     IonGrid,
     IonRow,
     IonCol,
-    useIonViewWillEnter,
 } from "@ionic/react";
+import { RefresherEventDetail } from "@ionic/core";
 import "./VideoList.css";
 
 const VideoList: React.FC = () => {
-    const [videos, setVideos] = useState<Video[]>([]);
-
-    useIonViewWillEnter(() => {
-        const vids = getVideos();
-        setVideos(vids);
-    });
-
-    const refresh = (e: CustomEvent) => {
-        setTimeout(() => {
-            e.detail.complete();
-        }, 3000);
+    const { isLoading, error, data, refetch } = useVideos();
+    const refresh = async (e: CustomEvent<RefresherEventDetail>) => {
+        await refetch();
+        e.detail.complete();
     };
+
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>An error has occurred: ${error.message}</p>;
 
     return (
         <IonPage id="videos-page">
@@ -49,9 +44,9 @@ const VideoList: React.FC = () => {
                 </IonHeader>
                 <IonGrid>
                     <IonRow>
-                        {videos.map((v: Video) => (
-                            <IonCol size="12" size-sm="6" size-md="4" size-xl="3">
-                                <VideoListItem key={v.name} video={v} />
+                        {data?.map((v: Video) => (
+                            <IonCol size="12" size-sm="6" size-md="4" size-xl="3" key={v.name}>
+                                <VideoListItem video={v} />
                             </IonCol>
                         ))}
                     </IonRow>
