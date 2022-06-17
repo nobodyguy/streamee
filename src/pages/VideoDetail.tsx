@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { Video, useVideo } from "../data/videos";
+import { useVideo } from "../data/videos";
 import VideoPlayer from "../components/VideoPlayer";
-import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, useIonViewWillEnter } from "@ionic/react";
+import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar } from "@ionic/react";
 import { useParams } from "react-router";
 import "./VideoDetail.css";
 
