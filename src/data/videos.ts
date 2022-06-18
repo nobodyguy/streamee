@@ -39,8 +39,20 @@ function useVideosQuery(select?: ReactQuerySelectType<Video>) {
     return useQuery<Video[], Error>("videos", fetchVideos, { select });
 }
 
-export function useVideos() {
+function useVideos() {
     return useVideosQuery(transformVideos);
+}
+
+export function useFilteredVideos(filter: string) {
+    const queryInfo = useVideos();
+
+    return {
+        ...queryInfo,
+        data: useMemo(
+            () => queryInfo.data?.filter((video: Video) => video.name.toLowerCase().includes(filter.toLowerCase())),
+            [queryInfo.data, filter]
+        ),
+    };
 }
 
 export function useVideo(slug: string) {

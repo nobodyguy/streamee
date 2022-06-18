@@ -1,11 +1,13 @@
+import { useState } from "react";
 import VideoListItem from "../components/VideoListItem";
-import { Video, useVideos } from "../data/videos";
+import { Video, useFilteredVideos } from "../data/videos";
 import {
     IonContent,
     IonHeader,
     IonPage,
     IonRefresher,
     IonRefresherContent,
+    IonSearchbar,
     IonTitle,
     IonToolbar,
     IonGrid,
@@ -16,7 +18,8 @@ import { RefresherEventDetail } from "@ionic/core";
 import "./VideoList.css";
 
 const VideoList: React.FC = () => {
-    const { isLoading, error, data, refetch } = useVideos();
+    const [filter, setFilter] = useState<string>("");
+    const { isLoading, error, data, refetch } = useFilteredVideos(filter);
     const refresh = async (e: CustomEvent<RefresherEventDetail>) => {
         await refetch();
         e.detail.complete();
@@ -33,6 +36,7 @@ const VideoList: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <IonSearchbar value={filter} onIonChange={(e) => setFilter(e.detail.value || "")}></IonSearchbar>
                 <IonRefresher slot="fixed" onIonRefresh={refresh}>
                     <IonRefresherContent></IonRefresherContent>
                 </IonRefresher>
