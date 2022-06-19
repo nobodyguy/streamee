@@ -1,3 +1,4 @@
+import React from "react";
 import ReactPlayer from "react-player";
 import { Video } from "../data/videos";
 import "./VideoPlayer.css";
