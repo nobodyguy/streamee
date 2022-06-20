@@ -25,8 +25,8 @@ const VideoList: React.FC = () => {
         e.detail.complete();
     };
 
-    if (isLoading) return <p>Loading...</p>;
     if (error) return <p>An error has occurred: ${error.message}</p>;
+    if (isLoading) return <p>Loading...</p>;
 
     return (
         <IonPage id="videos-page">
