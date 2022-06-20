@@ -53,18 +53,43 @@ registerRoute(
     createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
 );
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
+// Cache external JS
 registerRoute(
     // Add in any other file extensions or routing criteria as needed.
-    ({ url }) => url.origin === self.location.origin && url.pathname.endsWith(".png"),
+    ({ url }) => url.pathname.endsWith(".js"),
+    // Customize this strategy as needed, e.g., by changing to CacheFirst.
+    new StaleWhileRevalidate({
+        cacheName: "JS",
+        plugins: [new ExpirationPlugin({ maxAgeSeconds: 7 * 24 * 60 * 60 })],
+    })
+);
+
+// Cache all images
+registerRoute(
+    // Add in any other file extensions or routing criteria as needed.
+    ({ url }) => url.pathname.endsWith(".png"),
     // Customize this strategy as needed, e.g., by changing to CacheFirst.
     new StaleWhileRevalidate({
         cacheName: "images",
         plugins: [
             // Ensure that once this runtime cache reaches a maximum size the
-            // least-recently used images are removed.
-            new ExpirationPlugin({ maxEntries: 50 }),
+            // least-recently used items are removed.
+            new ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 30 * 24 * 60 * 60 }),
+        ],
+    })
+);
+
+// Cache API JSON
+registerRoute(
+    // Add in any other file extensions or routing criteria as needed.
+    ({ url }) => url.origin === "https://gist.githubusercontent.com" && url.pathname.endsWith(".json"),
+    // Customize this strategy as needed, e.g., by changing to CacheFirst.
+    new StaleWhileRevalidate({
+        cacheName: "API",
+        plugins: [
+            // Ensure that once this runtime cache reaches a maximum size the
+            // least-recently used items are removed.
+            new ExpirationPlugin({ maxEntries: 1, maxAgeSeconds: 30 * 24 * 60 * 60 }),
         ],
     })
 );
